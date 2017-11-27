@@ -55,10 +55,10 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
     process.exit(1);
 }
 
-wakeUp(process.env.ADDRESSES.split(","));
+wakeUp(process.env.ADDRESSES);
 function wakeUp(addresses) {
     try {
-        addresses.map((uri) => {
+        addresses.split(",").map((uri) => {
             request({
                     method: 'GET',
                     uri: uri
