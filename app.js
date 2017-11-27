@@ -306,6 +306,7 @@ function verifyRequestSignature(req, res, buf) {
             .digest('hex');
 
         if (signatureHash != expectedHash) {
+            console.error("Couldn't validate the signature.");
             // throw new Error("Couldn't validate the request signature.");
         }
     }
