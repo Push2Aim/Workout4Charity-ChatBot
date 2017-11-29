@@ -165,7 +165,7 @@ app.post('/event', function (req, res) {
 
         return userInfoRequest(senderID)
             .then(userInfo =>
-                res.status(200).json({req: JSON.stringify(userInfo)})
+                res.status(200).json({userInfo: JSON.stringify(userInfo)})
             )
 
     } catch (err) {
