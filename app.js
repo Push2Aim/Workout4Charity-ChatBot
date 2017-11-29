@@ -163,9 +163,11 @@ app.post('/event', function (req, res) {
             }
         });
 
-        return userInfoRequest(senderID)
-            .then(userInfo =>
+        userInfoRequest(senderID)
+            .then(userInfo =>{
+                console.log("send Response /event", JSON.stringify(userInfo))
                 res.status(200).json({userInfo: JSON.stringify(userInfo)})
+            }
             )
 
     } catch (err) {
