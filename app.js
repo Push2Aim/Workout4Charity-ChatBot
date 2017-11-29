@@ -691,6 +691,9 @@ function receivedPostback(event, url) {
                     return pauseUser(actionSplit[1], true);
                 case "RESUME":
                     return pauseUser(actionSplit[1], false);
+                case "GET_STARTED":
+                    if (event.postback.referral)
+                        return receivedReferralNewUser(event);
                 default:
                     sendEventRequest(senderID, payload, url);
             }
@@ -806,6 +809,50 @@ function receivedReferral(event) {
         }
     });
 }
+
+function receivedReferralNewUser(event) {
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+
+    let {ref,source,type} = event.postback.referral;
+
+    console.log("Received Referral from source %s for user %d with ref %s " +
+        "and type %s ", source, senderID, ref ,type);
+
+    callSendAPI({
+        recipient: {
+            id: senderID
+        },
+        message: {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "generic",
+                    "elements": [{
+                        "title": "Das ist Suleyman",
+                        "image_url": "https://millenniumchild.org/wp-content/uploads/2016/08/p.jpg",
+                        "default_action": {
+                            "type": "web_url",
+                            "url": "https://workout4charity.herokuapp.com/?ref="+ref,
+                            "webview_share_button": "hide",
+                            "webview_height_ratio": "full",
+                            "messenger_extensions": true,
+                        },
+                        "buttons": [{
+                            "type": "web_url",
+                            "url": "https://workout4charity.herokuapp.com/?ref="+ref,
+                            "title": "Mehr Lesen",
+                            "webview_share_button": "hide",
+                            "webview_height_ratio": "full",
+                            "messenger_extensions": true,
+                        }]
+                    }]
+                }
+            }
+        }
+    });
+}
+
 /*
  * Send an image using the Send API.
  *
