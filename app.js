@@ -128,8 +128,10 @@ app.post('/send', function (req, res) {
 app.post('/event', function (req, res) {
     try {
         console.log("/event", req.body);
+        res.status(200).json({res: "res"})
     } catch (err) {
         console.error("caught Error at /event with req: %s; res: %s :", req.body, res, err);
+        res.status(500).json({error: err})
     }
 });
 
