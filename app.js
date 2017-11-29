@@ -129,9 +129,10 @@ app.post('/event', function (req, res) {
     try {
         console.log("/event", req.body);
 
+        let senderID = req.body.userID;
         callSendAPI({
             recipient: {
-                id: req.body.userID
+                id: senderID
             },
             message: {
                 "attachment": {
@@ -162,7 +163,11 @@ app.post('/event', function (req, res) {
             }
         });
 
-        res.status(200).json({req: JSON.stringify(req.body)})
+        return userInfoRequest(senderID)
+            .then(userInfo =>
+                res.status(200).json({req: JSON.stringify(userInfo)})
+            )
+
     } catch (err) {
         console.error("caught Error at /event with req: %s; res: %s :", req.body, res, err);
         res.status(500).json({error: err})
