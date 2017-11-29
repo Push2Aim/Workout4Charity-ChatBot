@@ -768,9 +768,7 @@ function receivedReferral(event) {
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
 
-    var ref = event.referral.ref;
-    var source = event.referral.source;
-    var type = event.referral.type;
+    let {ref,source,type} = event.referral;
 
     console.log("Received Referral from source %s for user %d with ref %s " +
         "and type %s ", source, senderID, ref ,type);
