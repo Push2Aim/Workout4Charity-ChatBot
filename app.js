@@ -128,6 +128,40 @@ app.post('/send', function (req, res) {
 app.post('/event', function (req, res) {
     try {
         console.log("/event", req.body);
+
+        callSendAPI({
+            recipient: {
+                id: req.body.userID
+            },
+            message: {
+                "attachment": {
+                    "type": "template",
+                    "payload": {
+                        "template_type": "generic",
+                        "elements": [{
+                            "title": "Das ist Suleyman",
+                            "image_url": "https://millenniumchild.org/wp-content/uploads/2016/08/p.jpg",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://workout4charity.herokuapp.com/",
+                                "webview_share_button": "hide",
+                                "webview_height_ratio": "full",
+                                "messenger_extensions": true,
+                            },
+                            "buttons": [{
+                                "type": "web_url",
+                                "url": "https://workout4charity.herokuapp.com/",
+                                "title": "Mehr Lesen",
+                                "webview_share_button": "hide",
+                                "webview_height_ratio": "full",
+                                "messenger_extensions": true,
+                            }]
+                        }]
+                    }
+                }
+            }
+        });
+
         res.status(200).json({req: JSON.stringify(req.body)})
     } catch (err) {
         console.error("caught Error at /event with req: %s; res: %s :", req.body, res, err);
