@@ -135,6 +135,16 @@ app.post('/event', function (req, res) {
     }
 });
 
+app.options('/event', function (req, res) {
+    try {
+        console.log("/event OPTIONS", req.body, req);
+        res.status(200).json({req: JSON.stringify(req.body)})
+    } catch (err) {
+        console.error("caught Error at /event OPTIONS with req: %s; res: %s :", req.body, res, err);
+        res.status(500).json({error: err})
+    }
+});
+
 let pausedUsers = {};
 
 function pauseUser(userId, paused) {
