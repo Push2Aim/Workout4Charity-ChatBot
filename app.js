@@ -130,45 +130,13 @@ app.post('/event', function (req, res) {
         console.log("/event", req.body);
 
         let senderID = req.body.userID;
-        callSendAPI({
-            recipient: {
-                id: senderID
-            },
-            message: {
-                "attachment": {
-                    "type": "template",
-                    "payload": {
-                        "template_type": "generic",
-                        "elements": [{
-                            "title": "Das ist Suleyman",
-                            "image_url": "https://millenniumchild.org/wp-content/uploads/2016/08/p.jpg",
-                            "default_action": {
-                                "type": "web_url",
-                                "url": "https://workout4charity.herokuapp.com/",
-                                "webview_share_button": "hide",
-                                "webview_height_ratio": "full",
-                                "messenger_extensions": true,
-                            },
-                            "buttons": [{
-                                "type": "web_url",
-                                "url": "https://workout4charity.herokuapp.com/",
-                                "title": "Mehr Lesen",
-                                "webview_share_button": "hide",
-                                "webview_height_ratio": "full",
-                                "messenger_extensions": true,
-                            }]
-                        }]
-                    }
-                }
-            }
-        });
+        sendSpeech(senderID,"Bitte sag bei diesem Facebook Event zu, und lad gerne jemanden ein☺☺ https://www.facebook.com/events/1943739059208029/");
 
         userInfoRequest(senderID)
             .then(userInfo =>{
                 console.log("send Response /event", JSON.stringify(userInfo))
                 res.status(200).json({userInfo: JSON.stringify(userInfo)})
-            }
-            )
+            })
 
     } catch (err) {
         console.error("caught Error at /event with req: %s; res: %s :", req.body, res, err);
